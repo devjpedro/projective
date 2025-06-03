@@ -201,7 +201,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Buckz\\Documents\\Estudos\\Rocketseat\\cursos\\saas\\next-saas-rbac\\apps\\api\\src\\generated\\prisma",
+      "value": "/home/buckz/Documentos/www/rocketseat/courses/next-saas-rbac/apps/api/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -210,12 +210,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "rhel-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Buckz\\Documents\\Estudos\\Rocketseat\\cursos\\saas\\next-saas-rbac\\apps\\api\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/buckz/Documentos/www/rocketseat/courses/next-saas-rbac/apps/api/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

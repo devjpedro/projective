@@ -1,5 +1,8 @@
 import { ChevronDown, LogOut } from 'lucide-react'
 import React from 'react'
+
+import { auth } from '@/auth/auth'
+
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {
   DropdownMenu,
@@ -7,8 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import Link from 'next/link'
-import { auth } from '@/auth/auth'
 
 function getInitials(name: string | null): string {
   if (!name) return ''
@@ -38,7 +39,7 @@ export async function ProfileButton() {
         <ChevronDown className="text-muted-foreground size-4" />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" sideOffset={10} alignOffset={12}>
         <DropdownMenuItem asChild>
           <a href="/api/auth/sign-out">
             Sign Out
