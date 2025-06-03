@@ -2,6 +2,8 @@ import { ChevronsUpDown, PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
+import { getOrganizations } from '@/http/get-organizations'
+
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {
   DropdownMenu,
@@ -13,7 +15,9 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 
-export default function OrganizationSwitcher() {
+export default async function OrganizationSwitcher() {
+  const { organizations } = await getOrganizations()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-[168px] cursor-pointer items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">
@@ -29,13 +33,19 @@ export default function OrganizationSwitcher() {
       >
         <DropdownMenuGroup>
           <DropdownMenuLabel>Organizations</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <Avatar className="mr-2 size-4">
-              <AvatarImage src="https://github.com/rocketseat.png" />
-              <AvatarFallback />
-            </Avatar>
-            <span className="line-clamp-1">Rocketseat</span>
-          </DropdownMenuItem>
+          {organizations.map((organization) => (
+            <DropdownMenuItem key={organization.id} asChild>
+              <Link href={`/org/${organization.slug}`}>
+                <Avatar className="mr-2 size-4">
+                  {organization.avatarUrl && (
+                    <AvatarImage src={organization.avatarUrl} />
+                  )}
+                  <AvatarFallback>{organization.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <span className="line-clamp-1">{organization.name}</span>
+              </Link>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

@@ -23,6 +23,8 @@ function getInitials(name: string | null): string {
 export async function ProfileButton() {
   const { user } = await auth()
 
+  console.log({ user })
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-3 outline-none">
@@ -31,9 +33,7 @@ export async function ProfileButton() {
           <span className="text-muted-foreground text-xs">{user.email}</span>
         </div>
         <Avatar>
-          {user.avatarUrl && (
-            <AvatarImage src="https://github.com/devjpedro.png" />
-          )}
+          {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
           <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
         </Avatar>
         <ChevronDown className="text-muted-foreground size-4" />
