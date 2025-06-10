@@ -3,7 +3,7 @@ import React from 'react'
 import InterceptedSheetContent from '@/components/intercepted-sheet-content'
 import { Sheet, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 
-import OrganizationForm from '../../create-organization/organization-form'
+import OrganizationForm from '../../org/organization-form'
 
 export default function CreateOrganization() {
   return (
