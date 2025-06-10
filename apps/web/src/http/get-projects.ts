@@ -20,7 +20,7 @@ interface GetProjectsResponse {
 
 export async function getProjects(org: string) {
   // TODO: Remove this timeout when the API is ready
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const result = await api
     .get(`organizations/${org}/projects`)
