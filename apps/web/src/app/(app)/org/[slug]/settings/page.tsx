@@ -1,4 +1,7 @@
+import { XCircle } from 'lucide-react'
+
 import { ability, getCurrentOrg } from '@/auth/auth'
+import { ConfirmationActionButton } from '@/components/confirm-button-actions'
 import {
   Card,
   CardContent,
@@ -11,7 +14,6 @@ import { getOrganization } from '@/http/get-organization'
 import OrganizationForm from '../../organization-form'
 import { shutdownOrganizationAction } from './actions'
 import { Billing } from './billing'
-import { ShutdownOrganizationButton } from './shutdown-organization-button'
 
 export default async function Settings() {
   const currentOrg = await getCurrentOrg()
@@ -63,9 +65,19 @@ export default async function Settings() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ShutdownOrganizationButton
-                onShutdown={shutdownOrganizationAction}
-              />
+              <ConfirmationActionButton
+                action={shutdownOrganizationAction}
+                variant="destructive"
+                title="Are you absolutely sure?"
+                description="This action cannot be undone. This will permanently shutdown your
+            organization and remove all associated data from our servers."
+                confirmText="Yes, shutdown organization"
+                cancelText="Cancel"
+                loadingText="Shutting down..."
+              >
+                <XCircle className="mr-2 size-4" />
+                Shutdown Organization
+              </ConfirmationActionButton>
             </CardContent>
           </Card>
         )}

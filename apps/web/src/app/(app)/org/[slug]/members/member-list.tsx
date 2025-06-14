@@ -1,9 +1,10 @@
 import { organizationSchema } from '@saas/auth'
-import { ArrowLeftRight, Crown } from 'lucide-react'
+import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
 import { ability, getCurrentOrg } from '@/auth/auth'
+import { ConfirmationActionButton } from '@/components/confirm-button-actions'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
@@ -16,9 +17,10 @@ import { getMembers } from '@/http/get-members'
 import { getMembership } from '@/http/get-membership'
 import { getOrganization } from '@/http/get-organization'
 
+import { removeMemberAction } from './actions'
+
 export default async function MemberList() {
   const currentOrg = await getCurrentOrg()
-
   const permissions = await ability()
 
   const [{ membership }, { members }, { organization }] = await Promise.all([
@@ -33,6 +35,8 @@ export default async function MemberList() {
     'transfer_ownership',
     authOrganization,
   )
+
+  const canDeleteMember = permissions?.can('delete', 'User')
 
   return (
     <div className="space-y-2">
@@ -77,7 +81,7 @@ export default async function MemberList() {
                 <TableCell className="py-2.5">
                   <div className="flex items-center justify-end gap-2">
                     {canTransferOwnership && (
-                      <Tooltip>
+                      <Tooltip delayDuration={1000}>
                         <TooltipTrigger asChild>
                           <Button size="icon" variant="ghost">
                             <ArrowLeftRight className="size-4" />
@@ -86,6 +90,26 @@ export default async function MemberList() {
                         </TooltipTrigger>
                         <TooltipContent>Transfer Ownership</TooltipContent>
                       </Tooltip>
+                    )}
+
+                    {canDeleteMember && (
+                      <ConfirmationActionButton
+                        action={removeMemberAction.bind(null, member.id)}
+                        variant="destructive"
+                        size="icon"
+                        tooltipText="Remove member"
+                        loadingText="Removing..."
+                        title="Remove Member"
+                        description="Are you sure you want to remove this member? This action will be processed on the server."
+                        confirmText="Remove"
+                        disabled={
+                          member.userId === membership.userId ||
+                          member.userId === organization.ownerId
+                        }
+                        icon
+                      >
+                        <UserMinus className="size-4" />
+                      </ConfirmationActionButton>
                     )}
                   </div>
                 </TableCell>

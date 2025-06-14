@@ -26,6 +26,7 @@ import { getPendingInvites } from './routes/invites/get-pending-invites'
 import { rejectInvite } from './routes/invites/reject-invite'
 import { revokeInvite } from './routes/invites/revoke-invite'
 import { getMembers } from './routes/members/get-members'
+import { removeMember } from './routes/members/remove-members'
 import { updateMember } from './routes/members/update-members'
 import { createOrganization } from './routes/orgs/create-organization'
 import { getMembership } from './routes/orgs/get-membership'
@@ -101,6 +102,7 @@ app.register(getProjects)
 app.register(updateProject)
 
 app.register(getMembers)
+app.register(removeMember)
 app.register(updateMember)
 
 app.register(createInvite)
