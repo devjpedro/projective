@@ -18,6 +18,7 @@ import { getMembership } from '@/http/get-membership'
 import { getOrganization } from '@/http/get-organization'
 
 import { removeMemberAction } from './actions'
+import UpdateMemberRoleSelect from './update-member-role-select'
 
 export default async function MemberList() {
   const currentOrg = await getCurrentOrg()
@@ -91,6 +92,16 @@ export default async function MemberList() {
                         <TooltipContent>Transfer Ownership</TooltipContent>
                       </Tooltip>
                     )}
+
+                    <UpdateMemberRoleSelect
+                      memberId={member.id}
+                      value={member.role}
+                      disabled={
+                        member.userId === membership.userId ||
+                        member.userId === organization.ownerId ||
+                        permissions?.cannot('update', 'User')
+                      }
+                    />
 
                     {canDeleteMember && (
                       <ConfirmationActionButton
