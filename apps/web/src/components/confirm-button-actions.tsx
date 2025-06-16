@@ -1,5 +1,6 @@
 'use client'
 
+import { Loader2 } from 'lucide-react'
 import { type ReactNode, useState, useTransition } from 'react'
 
 import {
@@ -95,7 +96,11 @@ export function ConfirmationActionButton({
                   className={className}
                   type="button"
                 >
-                  {isPending && loadingText ? loadingText : buttonContent}
+                  {isPending ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    children
+                  )}
                   {tooltipText && (
                     <span className="sr-only">{tooltipText}</span>
                   )}
