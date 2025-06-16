@@ -1,12 +1,15 @@
+import { XOctagon } from 'lucide-react'
 import React from 'react'
 
 import { ability, getCurrentOrg } from '@/auth/auth'
+import { ConfirmationActionButton } from '@/components/confirm-button-actions'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { getInvites } from '@/http/get-invites'
 import { formatRole } from '@/util/format-role'
 
-import RevokeInviteButton from './revoke-invite-button'
+import { revokeInviteAction } from './actions'
+import CreateInviteForm from './create-invite-form'
 
 export async function Invites() {
   const currentOrg = await getCurrentOrg()
@@ -23,7 +26,9 @@ export async function Invites() {
           <CardHeader>
             <CardTitle>Invite member</CardTitle>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <CreateInviteForm />
+          </CardContent>
         </Card>
       )}
 
@@ -46,7 +51,19 @@ export async function Invites() {
                   <TableCell className="py-2.5">
                     <div className="flex justify-end">
                       {canRevokeInvite && (
-                        <RevokeInviteButton inviteId={invite.id} />
+                        <ConfirmationActionButton
+                          action={revokeInviteAction.bind(null, invite.id)}
+                          variant="destructive"
+                          size="icon"
+                          tooltipText="Revoke invite"
+                          loadingText="Revoking..."
+                          title="Revoke Invite"
+                          description="Are you sure you want to revoke this invite? This action will be processed on the server."
+                          confirmText="Revoke"
+                          icon
+                        >
+                          <XOctagon className="size-4" />
+                        </ConfirmationActionButton>
                       )}
                     </div>
                   </TableCell>
