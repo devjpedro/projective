@@ -52,7 +52,9 @@ export default function ProjectForm() {
       )}
 
       <div className="space-y-1">
-        <Label htmlFor="name">Project name</Label>
+        <Label htmlFor="name" className="mb-2">
+          Project name
+        </Label>
         <Input name="name" id="name" />
 
         {errors?.name && (
@@ -63,7 +65,9 @@ export default function ProjectForm() {
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description" className="mb-2">
+          Description
+        </Label>
         <Textarea name="description" id="description" />
 
         {errors?.description && (
