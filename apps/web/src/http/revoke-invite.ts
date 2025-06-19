@@ -6,7 +6,5 @@ interface RevokeInviteRequest {
 }
 
 export async function revokeInvite({ org, inviteId }: RevokeInviteRequest) {
-  await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate delay
-
   await api.delete(`organizations/${org}/invites/${inviteId}`)
 }
