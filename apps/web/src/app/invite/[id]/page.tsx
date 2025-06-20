@@ -12,15 +12,12 @@ import { Separator } from '@/components/ui/separator'
 import { getInvite } from '@/http/get-invite'
 
 import { acceptInviteAction, signInFromInviteAction } from './actions'
+import type { PageProps } from '.next/types/app/(app)/page'
 
 dayjs.extend(relativeTime)
 
-export default async function InvitePage({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const inviteId = params.id
+export default async function InvitePage({ params }: PageProps) {
+  const inviteId = (await params).id
 
   let invite
 
