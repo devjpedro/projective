@@ -37,6 +37,7 @@ export function getProject(app: FastifyInstance) {
                 owner: z.object({
                   id: z.string(),
                   name: z.string().nullable(),
+                  email: z.string().email(),
                   avatarUrl: z.string().url().nullable(),
                 }),
               }),
@@ -69,6 +70,7 @@ export function getProject(app: FastifyInstance) {
                 id: true,
                 name: true,
                 avatarUrl: true,
+                email: true,
               },
             },
           },
