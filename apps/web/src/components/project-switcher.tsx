@@ -41,7 +41,7 @@ export default function ProjectSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger
         disabled={isLoading}
-        className="focus-visible:ring-primary flex w-[168px] cursor-pointer items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2"
+        className="focus-visible:ring-primary xs:!w-[130px] flex !w-[128px] cursor-pointer items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2 sm:!w-[168px]"
       >
         {isLoading ? (
           <>
@@ -57,7 +57,9 @@ export default function ProjectSwitcher() {
                     <AvatarImage src={currentProject.avatarUrl} />
                   )}
                   <AvatarFallback>
-                    {currentProject.name.charAt(0)}
+                    <span className="text-xs">
+                      {currentProject.name.charAt(0)}
+                    </span>
                   </AvatarFallback>
                 </Avatar>
                 <span className="truncate text-left">

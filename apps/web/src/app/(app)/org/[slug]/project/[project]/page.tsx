@@ -10,8 +10,6 @@ export default async function Project({ params }: PageProps) {
 
   const { project } = await getProject(currentOrg!, projectSlug)
 
-  console.log({ project })
-
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">{project.name}</h1>

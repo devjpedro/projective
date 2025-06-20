@@ -23,7 +23,7 @@ export async function ProjectList() {
   const { projects } = await getProjects(currentOrg!)
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
       {projects.map((project) => {
         return (
           <Card key={project.id} className="flex flex-col justify-between">

@@ -17,7 +17,7 @@ export default function ThemeSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="hidden sm:block">
         <Button variant="ghost" size="icon">
           <Sun className="size-4 dark:hidden" />
           <Moon className="hidden size-4 dark:block" />

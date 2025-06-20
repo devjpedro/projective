@@ -13,37 +13,52 @@ import ProjectSwitcher from './project-switcher'
 import ThemeSwitcher from './theme/theme-switcher'
 import { Separator } from './ui/separator'
 
-export async function Header() {
+interface HeaderProps {
+  isHome?: boolean
+}
+
+export async function Header({ isHome = false }: HeaderProps) {
   const permissions = await ability()
 
+  const canGetProject = permissions?.can('get', 'Project')
+
   return (
-    <div className="mx-auto flex max-w-[1200px] items-center justify-between">
-      <div className="flex items-center gap-3">
-        <Link href="/">
-          <Image src={logoIcon} alt="" className="size-6 dark:invert" />
-        </Link>
+    <>
+      <Link
+        href="/"
+        className="xs:hidden mx-auto mb-3  flex w-fit items-center justify-center text-center"
+      >
+        <Image src={logoIcon} alt="" className="size-6 dark:invert" />
+      </Link>
 
-        <Slash className="text-border size-3 -rotate-[24deg]" />
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between">
+        <div className="xs:gap-3 flex items-center gap-1">
+          <Link href="/" className="xs:block hidden">
+            <Image src={logoIcon} alt="" className="size-6 dark:invert" />
+          </Link>
 
-        <OrganizationSwitcher />
+          <Slash className="text-border hidden size-3 -rotate-[24deg] sm:block" />
 
-        {permissions?.can('get', 'Project') && (
-          <>
-            <Slash className="text-border size-3 -rotate-[24deg]" />
+          <OrganizationSwitcher isHome={isHome} />
 
-            <ProjectSwitcher />
-          </>
-        )}
+          {canGetProject && (
+            <>
+              <Slash className="text-border size-3 -rotate-[24deg]" />
+
+              <ProjectSwitcher />
+            </>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          <PendingInvites />
+          <ThemeSwitcher />
+
+          <Separator orientation="vertical" className="hidden !h-7 sm:block" />
+
+          <ProfileButton />
+        </div>
       </div>
-
-      <div className="flex items-center gap-4">
-        <PendingInvites />
-        <ThemeSwitcher />
-
-        <Separator orientation="vertical" className="!h-7" />
-
-        <ProfileButton />
-      </div>
-    </div>
+    </>
   )
 }

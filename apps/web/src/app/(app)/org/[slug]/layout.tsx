@@ -7,8 +7,8 @@ export default async function OrgLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div>
-      <div className="pt-6">
+    <div className="xs:px-4 px-3 sm:px-8">
+      <div className="pt-4 sm:pt-6">
         <Header />
         <Tabs />
       </div>
