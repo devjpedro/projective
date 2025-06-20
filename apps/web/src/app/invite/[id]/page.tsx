@@ -13,15 +13,13 @@ import { getInvite } from '@/http/get-invite'
 
 import { acceptInviteAction, signInFromInviteAction } from './actions'
 
-interface InvitePageProps {
-  params: {
-    id: string
-  }
-}
-
 dayjs.extend(relativeTime)
 
-export default async function InvitePage({ params }: InvitePageProps) {
+export default async function InvitePage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const inviteId = params.id
 
   let invite
