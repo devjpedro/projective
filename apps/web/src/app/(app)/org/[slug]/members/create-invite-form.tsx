@@ -36,8 +36,10 @@ export default function CreateInviteForm() {
         </Alert>
       )}
 
-      <div className={`flex sm:flex-row flex-col items-center gap-2 ${errors ? 'pb-2' : ''}`}>
-        <div className="relative flex-1 space-y-1 w-full">
+      <div
+        className={`flex flex-col items-center gap-2 sm:flex-row ${errors ? 'pb-2' : ''}`}
+      >
+        <div className="relative w-full flex-1 space-y-1">
           <Input name="email" id="email" placeholder="john@example.com" />
 
           {errors?.email && (
@@ -58,7 +60,7 @@ export default function CreateInviteForm() {
           </SelectContent>
         </Select>
 
-        <Button className='w-full sm:w-auto' type="submit" disabled={isPending}>
+        <Button className="w-full sm:w-auto" type="submit" disabled={isPending}>
           {isPending ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
