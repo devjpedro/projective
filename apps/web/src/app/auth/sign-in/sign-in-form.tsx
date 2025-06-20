@@ -1,10 +1,10 @@
 'use client'
 
-import { AlertTriangle, Loader2 } from 'lucide-react'
+import { AlertTriangle, Eye, EyeOff, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -18,6 +18,8 @@ import { signInWithGithub } from '../actions'
 import { signInWithEmailAndPassword } from './actions'
 
 export default function SignInForm() {
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false)
+
   const searchParams = useSearchParams()
 
   const {
@@ -25,6 +27,10 @@ export default function SignInForm() {
     handleAction,
     isPending,
   } = useFormState(signInWithEmailAndPassword)
+
+  const togglePasswordVisibility = () => {
+    setIsVisiblePassword((prev) => !prev)
+  }
 
   return (
     <div className="space-y-4">
@@ -57,7 +63,29 @@ export default function SignInForm() {
 
         <div className="space-y-1">
           <Label htmlFor="password">Password</Label>
-          <Input name="password" type="password" id="password" />
+
+          <div className="relative">
+            <Input
+              name="password"
+              type={isVisiblePassword ? 'text' : 'password'}
+              id="password"
+            />
+
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              onClick={togglePasswordVisibility}
+              className="absolute right-2 top-0"
+            >
+              {isVisiblePassword ? (
+                <EyeOff className="size-4" />
+              ) : (
+                <Eye className="size-4" />
+              )}
+              <span className="sr-only">Toggle password visibility</span>
+            </Button>
+          </div>
 
           {errors?.password && (
             <p className="text-xs font-medium text-red-500 dark:text-red-400">

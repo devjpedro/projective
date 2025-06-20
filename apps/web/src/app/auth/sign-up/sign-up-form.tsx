@@ -1,9 +1,9 @@
 'use client'
 
-import { AlertTriangle, Loader2 } from 'lucide-react'
+import { AlertTriangle, Eye, EyeOff, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 import githubIcon from '@/assets/github-icon.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -17,11 +17,25 @@ import { signInWithGithub } from '../actions'
 import { signUpAction } from './actions'
 
 export function SignUpForm() {
+  const [isVisiblePassword, setIsVisiblePassword] = useState({
+    password: false,
+    passwordConfirmation: false,
+  })
+
   const {
     formState: { errors, message, success },
     handleAction,
     isPending,
   } = useFormState(signUpAction)
+
+  const togglePasswordVisibility = (
+    field: 'password' | 'passwordConfirmation',
+  ) => {
+    setIsVisiblePassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }))
+  }
 
   return (
     <div className="space-y-4">
@@ -60,7 +74,29 @@ export function SignUpForm() {
 
         <div className="space-y-1">
           <Label htmlFor="password">Password</Label>
-          <Input name="password" type="password" id="password" />
+
+          <div className="relative">
+            <Input
+              name="password"
+              type={isVisiblePassword.password ? 'text' : 'password'}
+              id="password"
+            />
+
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              onClick={() => togglePasswordVisibility('password')}
+              className="absolute right-2 top-0"
+            >
+              {isVisiblePassword.password ? (
+                <EyeOff className="size-4" />
+              ) : (
+                <Eye className="size-4" />
+              )}
+              <span className="sr-only">Toggle password visibility</span>
+            </Button>
+          </div>
 
           {errors?.password && (
             <p className="text-xs font-medium text-red-500 dark:text-red-400">
@@ -71,11 +107,30 @@ export function SignUpForm() {
 
         <div className="space-y-1">
           <Label htmlFor="password_confirmation">Confirm your password</Label>
-          <Input
-            name="password_confirmation"
-            type="password"
-            id="password_confirmation"
-          />
+          <div className="relative">
+            <Input
+              name="password_confirmation"
+              type={
+                isVisiblePassword.passwordConfirmation ? 'text' : 'password'
+              }
+              id="password_confirmation"
+            />
+
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              onClick={() => togglePasswordVisibility('passwordConfirmation')}
+              className="absolute right-2 top-0"
+            >
+              {isVisiblePassword.passwordConfirmation ? (
+                <EyeOff className="size-4" />
+              ) : (
+                <Eye className="size-4" />
+              )}
+              <span className="sr-only">Toggle password visibility</span>
+            </Button>
+          </div>
 
           {errors?.password_confirmation && (
             <p className="text-xs font-medium text-red-500 dark:text-red-400">
