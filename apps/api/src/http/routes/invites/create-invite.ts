@@ -1,10 +1,14 @@
 import { roleSchema } from '@saas/auth'
+import { env } from '@saas/env'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
+import fs from 'fs'
+import path from 'path'
 import { z } from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
+import { resend } from '@/lib/resend'
 import { getUserPermissions } from '@/utils/get-user-permissions'
 
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -99,6 +103,22 @@ export function createInvite(app: FastifyInstance) {
             role,
             authorId: userId,
           },
+        })
+
+        const htmlTemplate = fs.readFileSync(
+          path.resolve('src/emails/organization-invitation.html'),
+          'utf-8',
+        )
+
+        const htmlContent = htmlTemplate
+          .replace('{{link}}', `${env.BASE_URL}/invite/${invite.id}`)
+          .replace('{{org}}', `${organization.name}`)
+
+        await resend.emails.send({
+          from: 'Projective <noreply@devjpedro.me>',
+          to: [email],
+          subject: 'Organization Invitation',
+          html: htmlContent,
         })
 
         return reply.status(201).send({
