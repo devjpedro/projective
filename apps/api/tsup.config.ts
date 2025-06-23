@@ -6,4 +6,7 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   noExternal: ['@saas/auth', '@saas/env'],
+  loader: {
+    '.html': 'text',
+  },
 })
