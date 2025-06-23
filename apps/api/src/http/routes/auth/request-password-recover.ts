@@ -1,8 +1,12 @@
+import { env } from '@saas/env'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
+import fs from 'fs'
+import path from 'path'
 import z from 'zod'
 
 import { prisma } from '@/lib/prisma'
+import { resend } from '@/lib/resend'
 
 export async function requestPasswordRecover(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -27,7 +31,6 @@ export async function requestPasswordRecover(app: FastifyInstance) {
       })
 
       if (!userFromEmail) {
-        // Evitar que as pessoas saibam se o usuário existe ou não
         return reply.status(201).send()
       }
 
@@ -38,9 +41,22 @@ export async function requestPasswordRecover(app: FastifyInstance) {
         },
       })
 
-      // Todo: Enviar o email com o link de recuperação de senha
+      const htmlTemplate = fs.readFileSync(
+        path.resolve('src/emails/password-recover.html'),
+        'utf-8',
+      )
 
-      console.log('Recover password token: ', code)
+      const htmlContent = htmlTemplate.replace(
+        '{{link}}',
+        `${env.BASE_URL}/auth/forgot-password/reset?token=${code}`,
+      )
+
+      await resend.emails.send({
+        from: 'Projective <noreply@devjpedro.me>',
+        to: [email],
+        subject: 'Password Reset Request',
+        html: htmlContent,
+      })
 
       return reply.status(201).send()
     },

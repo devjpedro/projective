@@ -9,6 +9,8 @@
       "env": [
         "DATABASE_URL",
         "JWT_SECRET",
+        "BASE_URL",
+        "RESEND_API_KEY",
         "GITHUB_OAUTH_CLIENT_ID",
         "GITHUB_OAUTH_CLIENT_SECRET",
         "GITHUB_OAUTH_CLIENT_REDIRECT_URI"
