@@ -1,83 +1,88 @@
-# Next.js SaaS + RBAC
 
-This project contains all the necessary boilerplate to setup a multi-tenant SaaS with Next.js including authentication and RBAC authorization.
+# Projective
 
-## Features
+Projective é uma base de código moderna e escalável para o desenvolvimento de aplicações SaaS multi-tenant com autenticação e controle de acesso baseado em funções (RBAC), construída com Next.js.
 
-### Authentication
+Ideal para desenvolvedores que desejam acelerar a construção de plataformas SaaS robustas, o projeto oferece uma arquitetura extensível e cobre os fundamentos essenciais de um sistema multiusuário com organizações, projetos e permissões granulares.
+## 🚀 Principais Recursos
 
-- [ ] It should be able to authenticate using e-mail & password;
-- [ ] It should be able to authenticate using Github account;
-- [ ] It should be able to recover password using e-mail;
-- [x] It should be able to create an account (e-mail, name and password);
+#### 🔐 Autenticação
+- Suporte planejado para login via e-mail/senha e conta do GitHub;
+- Criação de conta com nome, e-mail e senha;
+- Recuperação de senha via e-mail.
 
-### Organizations
+#### 🏢 Organizações
+- Gestão completa de organizações: criação, edição, encerramento e transferência de propriedade.
+- Visualização de todas as organizações às quais o usuário pertence.
 
-- [ ] It should be able to create a new organization;
-- [ ] It should be able to get organizations to which the user belongs;
-- [ ] It should be able to update an organization;
-- [ ] It should be able to shutdown an organization;
-- [ ] It should be able to transfer organization ownership;
+#### ✉️ Convites e Membros
+- Convite de novos membros com atribuição de funções.
+- Aceitação e revogação de convites pendentes.
+- Listagem e atualização de permissões de membros.
 
-### Invites
+#### 📁 Projetos
+- Criação, atualização e exclusão de projetos vinculados a uma organização.
+- Cada projeto possui nome, URL e descrição.
+## Arquitetura e Stack de Tecnologias
 
-- [ ] It should be able to invite a new member (e-mail, role);
-- [ ] It should be able to accept an invite;
-- [ ] It should be able to revoke a pending invite;
+#### 🧱 Arquitetura
 
-### Members
+O projeto adota uma arquitetura **monorepo** utilizando workspaces do `pnpm`, organizando o código em pacotes separados para **front-end**, **back-end**, e **módulos compartilhados** (como autenticação e configuração de ambiente).
 
-- [ ] It should be able to get organization members;
-- [ ] It should be able to update a member role;
+---
 
-### Projects
+#### 🎨 Front-end
 
-- [ ] It should be able to get projects within a organization;
-- [ ] It should be able to create a new project (name, url, description);
-- [ ] It should be able to update a project (name, url, description);
-- [ ] It should be able to delete a project;
+Aplicação construída com **Next.js 15** e **React 19**, focada em uma interface moderna, acessível e responsiva. As principais bibliotecas e ferramentas incluem:
 
-### Billing
+- **Tailwind CSS v4** — estilização utilitária moderna
+- **ShadCN** — componentes acessíveis com estilos pré-definidos
+- **Lucide-react** — biblioteca de ícones SVG
+- **React Query** (`@tanstack/react-query`) — gerenciamento de estado assíncrono
+- **Next Themes** — suporte a tema escuro/claro
+- **Ky** — cliente HTTP leve baseado em `fetch`
+- **Zod** — validação de dados
+- **Cookies-next** — manipulação de cookies no Next.js
+- **Day.js** — manipulação de datas
 
-- [ ] It should be able to get billing details for organization ($20 per project / $10 per member excluding billing role);
+---
 
-## RBAC
+#### ⚙️ Back-end
 
-Roles & permissions.
+API construída com **Fastify**, projetada para alta performance e validada com `zod`. Utiliza **Prisma ORM** para persistência e uma estrutura modular baseada em plugins.
 
-### Roles
+Principais tecnologias:
 
-- Owner (count as administrator)
-- Administrator
-- Member
-- Billing (one per organization)
-- Anonymous
+- **Fastify** — framework HTTP rápido e eficiente
+- **JWT (via @fastify/jwt)** — autenticação baseada em tokens
+- **Prisma ORM** — banco de dados relacional com tipagem forte
+- **Zod** — validação de schemas e entrada de dados
+- **Bcrypt.js** — hash de senhas
+- **Resend** — envio de e-mails
+- **Swagger (via @fastify/swagger)** — documentação automática da API
 
-### Permissions table
 
-|                          | Administrator | Member | Billing | Anonymous |
-| ------------------------ | ------------- | ------ | ------- | --------- |
-| Update organization      | ✅            | ❌     | ❌      | ❌        |
-| Delete organization      | ✅            | ❌     | ❌      | ❌        |
-| Invite a member          | ✅            | ❌     | ❌      | ❌        |
-| Revoke an invite         | ✅            | ❌     | ❌      | ❌        |
-| List members             | ✅            | ✅     | ✅      | ❌        |
-| Transfer ownership       | ⚠️            | ❌     | ❌      | ❌        |
-| Update member role       | ✅            | ❌     | ❌      | ❌        |
-| Delete member            | ✅            | ⚠️     | ❌      | ❌        |
-| List projects            | ✅            | ✅     | ✅      | ❌        |
-| Create a new project     | ✅            | ✅     | ❌      | ❌        |
-| Update a project         | ✅            | ⚠️     | ❌      | ❌        |
-| Delete a project         | ✅            | ⚠️     | ❌      | ❌        |
-| Get billing details      | ✅            | ❌     | ✅      | ❌        |
-| Export billing details   | ✅            | ❌     | ✅      | ❌        |
+## 🚀 Como rodar o projeto
 
-> ✅ = allowed
-> ❌ = not allowed
-> ⚠️ = allowed w/ conditions
+### ✅ Pré-requisitos
 
-#### Conditions
+Antes de começar, instale:
 
-- Only owners may transfer organization ownership;
-- Only administrators and project authors may update/delete the project;
-- Members can leave their own organization;
+- [Node.js](https://nodejs.org/) (recomendado: v18+)
+- [PNPM](https://pnpm.io/) (`npm install -g pnpm`)
+- [Docker](https://www.docker.com/) e Docker Compose
+
+---
+
+### ⚡ Setup rápido (recomendado)
+
+O projeto já vem com um script `setup.sh` que faz tudo por você.
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+## Autor
+
+[@devjpedro](https://www.github.com/devjpedro)
+
