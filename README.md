@@ -1,7 +1,7 @@
 
 # Projective
 
-Projective é uma base de código moderna e escalável para o desenvolvimento de aplicações SaaS multi-tenant com autenticação e controle de acesso baseado em funções (RBAC), construída com Next.js.
+Projective é um projeto de código moderna e escalável para o desenvolvimento de aplicações SaaS multi-tenant com autenticação e controle de acesso baseado em funções (RBAC), construída com Next.js.
 
 Ideal para desenvolvedores que desejam acelerar a construção de plataformas SaaS robustas, o projeto oferece uma arquitetura extensível e cobre os fundamentos essenciais de um sistema multiusuário com organizações, projetos e permissões granulares.
 ## 🚀 Principais Recursos
